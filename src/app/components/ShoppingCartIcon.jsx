@@ -10,7 +10,7 @@ const ShoppingCartIcon = () => {
         <span className='absolute -top-2 -right-2 bg-amber-500 text-white w-4 h-4 flex items-center justify-center rounded-full'>0</span>
         </Link>
     </div>
-  )
+  ) 
 }
 
 export default ShoppingCartIcon
