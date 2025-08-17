@@ -4,6 +4,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useRouter } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 
 // ✅ Validation schema with Zod
 const shippingSchema = z.object({
@@ -18,6 +20,7 @@ const shippingSchema = z.object({
 });
 
 const ShippingForm = ({ onSubmitForm }) => {
+    const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -29,6 +32,7 @@ const ShippingForm = ({ onSubmitForm }) => {
   const onSubmit = (data) => {
     console.log("Shipping data:", data);
     if (onSubmitForm) onSubmitForm(data);
+      router.push("/cart?step=3", { scroll: false });
   };
 
   return (
@@ -37,67 +41,86 @@ const ShippingForm = ({ onSubmitForm }) => {
       className="w-full flex flex-col gap-10"
     >
       {/* Name */}
-      <div>
+       <div className="flex flex-col gap-1">
+        <label htmlFor="name" className="text-xs text-gray-500 font-medium">
+          Name
+        </label>
         <input
+          className="border-b border-gray-200 py-2 outline-none text-sm"
           type="text"
-          placeholder="Name"
+          id="name"
+          placeholder="Abrar Jahin"
           {...register("name")}
-          className="w-full border-b border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-gray-800"
         />
         {errors.name && (
-          <p className="text-red-500 text-sm">{errors.name.message}</p>
+          <p className="text-xs text-red-500">{errors.name.message}</p>
         )}
       </div>
 
       {/* Email */}
-      <div>
+      <div className="flex flex-col gap-1">
+        <label htmlFor="email" className="text-xs text-gray-500 font-medium">
+          Email
+        </label>
         <input
+          className="border-b border-gray-200 py-2 outline-none text-sm"
           type="email"
-          placeholder="Email"
+          id="email"
+          placeholder="abrarjahin@gmail.com"
           {...register("email")}
-          className="w-full border-b border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-gray-800"
         />
         {errors.email && (
-          <p className="text-red-500 text-sm">{errors.email.message}</p>
+          <p className="text-xs text-red-500">{errors.email.message}</p>
         )}
       </div>
 
       {/* Phone */}
-      <div>
+     <div className="flex flex-col gap-1">
+        <label htmlFor="phone" className="text-xs text-gray-500 font-medium">
+          Phone
+        </label>
         <input
+          className="border-b border-gray-200 py-2 outline-none text-sm"
           type="text"
-          placeholder="Phone"
+          id="phone"
+          placeholder="123456789"
           {...register("phone")}
-          className="w-full border-b border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-gray-800"
         />
         {errors.phone && (
-          <p className="text-red-500 text-sm">{errors.phone.message}</p>
+          <p className="text-xs text-red-500">{errors.phone.message}</p>
         )}
       </div>
-
       {/* Address */}
-      <div>
+       <div className="flex flex-col gap-1">
+        <label htmlFor="address" className="text-xs text-gray-500 font-medium">
+          Address
+        </label>
         <input
+          className="border-b border-gray-200 py-2 outline-none text-sm"
           type="text"
-          placeholder="Address"
+          id="address"
+          placeholder="123 Savar, Dhaka"
           {...register("address")}
-          className="w-full border-b border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-gray-800"
         />
         {errors.address && (
-          <p className="text-red-500 text-sm">{errors.address.message}</p>
+          <p className="text-xs text-red-500">{errors.address.message}</p>
         )}
       </div>
 
       {/* City */}
-      <div>
+        <div className="flex flex-col gap-1">
+        <label htmlFor="city" className="text-xs text-gray-500 font-medium">
+          City
+        </label>
         <input
+          className="border-b border-gray-200 py-2 outline-none text-sm"
           type="text"
-          placeholder="City"
+          id="city"
+          placeholder="Dhaka"
           {...register("city")}
-          className="w-full border-b border-gray-300 p-2  focus:outline-none focus:ring-2 focus:ring-gray-800"
         />
         {errors.city && (
-          <p className="text-red-500 text-sm">{errors.city.message}</p>
+          <p className="text-xs text-red-500">{errors.city.message}</p>
         )}
       </div>
 
@@ -106,7 +129,8 @@ const ShippingForm = ({ onSubmitForm }) => {
         type="submit"
         className="w-full bg-gray-800 hover:bg-gray-900 text-white py-2 rounded-lg flex items-center justify-center"
       >
-        Continue →
+        Continue 
+        <ArrowRight className="w-4 h-4 ml-2" />
       </button>
     </form>
   );
