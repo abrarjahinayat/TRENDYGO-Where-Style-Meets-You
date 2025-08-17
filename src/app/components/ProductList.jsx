@@ -1,6 +1,8 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import Category from "./Category";
+import Link from "next/link";
+import Filter from "./Filter";
 
 const products = [
   {
@@ -113,14 +115,18 @@ const products = [
   },
 ];
 
-const ProductList = () => {
+const ProductList = ({category,params}) => {
   return <div className="container">
     <Category/>
+    {params === "products" && <Filter/>}
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
     </div>
+    <Link className="flex justify-end mt-4 underline test-sm text-gray-500" href={ category ? `/products?category=${category}` :  `/products`}>
+     View All Products
+     </Link>
   </div>;
 };
 

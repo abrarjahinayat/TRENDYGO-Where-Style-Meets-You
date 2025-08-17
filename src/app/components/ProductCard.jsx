@@ -12,6 +12,7 @@ const ProductCard = ({ product }) => {
   color: product.colors[0],
 });
 
+
   const handleProductType = ({ type, value }) => {
   setProductType((prev) => ({
     ...prev,

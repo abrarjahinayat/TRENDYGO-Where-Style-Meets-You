@@ -60,7 +60,9 @@ const Category = () => {
     const path = usePathname();
     
     const handleclick = (slug) => {
-      router.push(`${path}?category=${slug}`, {scroll: false});
+       const params = new URLSearchParams(searchParams);
+    params.set("category", slug);
+      router.push(`${path}?${params.toString()}`, {scroll: false});
     }
 
 

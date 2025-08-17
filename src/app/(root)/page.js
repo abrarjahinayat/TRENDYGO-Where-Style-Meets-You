@@ -1,14 +1,15 @@
-import React from 'react'
-import Banner from './components/Banner'
-import ProductList from './components/ProductList'
+import React from "react";
+import Banner from "../components/Banner";
+import ProductList from "../components/ProductList";
 
-const page = () => {
+const Homepage = ({ searchParams }) => {
+  const category = searchParams.category;
   return (
-    <div> 
-      <Banner/>
-      <ProductList/>
+    <div>
+      <Banner />
+      <ProductList category={category} params="homepage" />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default Homepage;
