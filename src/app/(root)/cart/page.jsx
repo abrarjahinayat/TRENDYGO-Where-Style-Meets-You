@@ -167,7 +167,7 @@ const CartPage = () => {
               ))
             ) : activeStep === 2 ? (
               <ShippingForm />
-            ) : activeStep === 3 && shippingfrom ? (
+            ) : activeStep === 3  ? (
               <PaymentForm />
             ) : (
               <p className="text-sm text-gray-500">

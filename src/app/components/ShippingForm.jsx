@@ -13,8 +13,8 @@ const shippingSchema = z.object({
   email: z.string().email("Invalid email address"),
   phone: z
     .string()
-    .min(7, "Phone number must be between 7 and 11 digits")
-    .max(11, "Phone number must be between 7 and 11 digits"),
+    .min(11, "Phone number must be in 11 digits"),
+ 
   address: z.string().min(1, "Address is required"),
   city: z.string().min(1, "City is required"),
 });
@@ -38,7 +38,7 @@ const ShippingForm = ({ onSubmitForm }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col gap-10"
+      className="w-full flex flex-col gap-6"
     >
       {/* Name */}
        <div className="flex flex-col gap-1">
@@ -129,7 +129,7 @@ const ShippingForm = ({ onSubmitForm }) => {
         type="submit"
         className="w-full bg-gray-800 hover:bg-gray-900 text-white py-2 rounded-lg flex items-center justify-center"
       >
-        Continue 
+        Continue  
         <ArrowRight className="w-4 h-4 ml-2" />
       </button>
     </form>
