@@ -5,13 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import React from "react";
-
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/cartSlice";
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
  const [producttype, setProductType] = useState({
   size: product.sizes[0],
   color: product.colors[0],
 });
 
+console.log(producttype)
 
   const handleProductType = ({ type, value }) => {
   setProductType((prev) => ({
@@ -19,6 +22,15 @@ const ProductCard = ({ product }) => {
     [type]: value,
   }));
 };
+
+const handleaddtocart =()=>{
+dispatch(addToCart({
+  ...product,
+  quantity: 1,
+  color: producttype.color,
+  size: producttype.size
+}))
+}
 
   return (
     <div>
@@ -89,7 +101,7 @@ const ProductCard = ({ product }) => {
               <span className="text-lg font-medium">
                 ${product.price.toFixed(2)}
               </span>
-              <button className="bg-white cursor-pointer shadow-md ring-1 ring-gray-300 transition duration-300 text-black flex items-center gap-2 hover:text-white hover:bg-black px-4 py-2 rounded-md">
+              <button onClick={handleaddtocart} className="bg-white cursor-pointer shadow-md ring-1 ring-gray-300 transition duration-300 text-black flex items-center gap-2 hover:text-white hover:bg-black px-4 py-2 rounded-md">
                 {" "}
                 <ShoppingCart className="w-4 h-4" /> Add to Cart
               </button>
