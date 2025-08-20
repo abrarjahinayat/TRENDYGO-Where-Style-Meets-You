@@ -6,6 +6,9 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { removeFromCart,updateQuantity,clearCart } from "@/redux/cartSlice";
 
 const steps = [
   { id: 1, title: "Shopping Cart" },
@@ -56,6 +59,8 @@ const cartItems = [
 ];
 
 export default function CartContent() {
+  const {cartItems} = useSelector(state => state.cart)
+  const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const router = useRouter();
   const [shippingfrom, setshippingfrom] = useState(null);
@@ -105,7 +110,7 @@ export default function CartContent() {
                 <div className="flex gap-8">
                   <div className="relative w-32 h-32 bg-gray-50 rounded-lg overflow-hidden">
                     <Image
-                      src={item.images[item.selectedColor]}
+                      src={item.image}
                       alt={item.name}
                       fill
                       className="object-contain"
@@ -116,8 +121,8 @@ export default function CartContent() {
                     <div className="flex flex-col gap-1">
                       <p className="text-sm font-medium">{item.name}</p>
                       <p className="text-xs text-gray-500">Quantity: {item.quantity}</p>
-                      <p className="text-xs text-gray-500">Size: {item.selectedSize}</p>
-                      <p className="text-xs text-gray-500">Color: {item.selectedColor}</p>
+                      <p className="text-xs text-gray-500">Size: {item.size}</p>
+                      <p className="text-xs text-gray-500">Color: {item.color}</p>
                     </div>
                     <p className="font-medium">${item.price.toFixed(2)}</p>
                   </div>
