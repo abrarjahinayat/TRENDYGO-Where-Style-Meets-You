@@ -29,7 +29,7 @@ const ProductCard = ({ product }) => {
     dispatch(
       addToCart({
         ...product,
-        quantity: 1,
+        quantity: producttype.quantity || 1,
         size: producttype.size,
         color: producttype.color,
         image: producttype.image, 

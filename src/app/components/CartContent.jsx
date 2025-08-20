@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { removeFromCart, updateQuantity, clearCart } from "@/redux/cartSlice";
-import { MinusSquare } from "lucide-react";
+
 import { Minus } from "lucide-react";
 import { Plus } from "lucide-react";
 
