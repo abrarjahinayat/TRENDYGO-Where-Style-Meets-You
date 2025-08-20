@@ -8,7 +8,7 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       state.cartItems.push(action.payload); 
-    
+      // Just pushes item directly (no duplicate check for simplicity)
     },
     removeFromCart: (state, action) => {
       state.cartItems = state.cartItems.filter(
