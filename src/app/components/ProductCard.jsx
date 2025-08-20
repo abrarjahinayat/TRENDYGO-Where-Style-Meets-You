@@ -5,22 +5,23 @@ import Link from "next/link";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/cartSlice";
+import { toast } from "react-toastify";
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
-  // ✅ initialize correctly
+
   const [producttype, setProductType] = useState({
     size: product.sizes[0],
     color: product.colors[0],
-    image: product.images[product.colors[0]], // use first color image
+    image: product.images[product.colors[0]],
   });
 
   const handleProductType = ({ type, value }) => {
     setProductType((prev) => ({
       ...prev,
       [type]: value,
-      ...(type === "color" && { image: product.images[value] }), // ✅ update image when color changes
+      ...(type === "color" && { image: product.images[value] }), 
     }));
   };
 
@@ -31,9 +32,11 @@ const ProductCard = ({ product }) => {
         quantity: 1,
         size: producttype.size,
         color: producttype.color,
-        image: producttype.image, // ✅ send selected color image
+        image: producttype.image, 
       })
     );
+    // localStorage.setItem("addtocart", JSON.stringify(product));
+      toast.success("Product added to cart");
   };
 
   return (
