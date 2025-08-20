@@ -8,7 +8,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { removeFromCart,updateQuantity,clearCart } from "@/redux/cartSlice";
+import { removeFromCart, updateQuantity, clearCart } from "@/redux/cartSlice";
+import { MinusSquare } from "lucide-react";
+import { Minus } from "lucide-react";
+import { Plus } from "lucide-react";
 
 const steps = [
   { id: 1, title: "Shopping Cart" },
@@ -16,50 +19,50 @@ const steps = [
   { id: 3, title: "Payment Method" },
 ];
 
-const cartItems = [
-  {
-    id: 1,
-    name: "Adidas CoreFit T-Shirt",
-    shortDescription: "Lorem ipsum dolor sit amet...",
-    description: "Lorem ipsum dolor sit amet...",
-    price: 39.9,
-    sizes: ["s", "m", "l", "xl", "xxl"],
-    colors: ["gray", "purple", "green"],
-    images: { gray: "/products/1g.png", purple: "/products/1p.png", green: "/products/1gr.png" },
-    quantity: 1,
-    selectedSize: "m",
-    selectedColor: "gray",
-  },
-  {
-    id: 2,
-    name: "Puma Ultra Warm Zip",
-    shortDescription: "Lorem ipsum dolor sit amet...",
-    description: "Lorem ipsum dolor sit amet...",
-    price: 59.9,
-    sizes: ["s", "m", "l", "xl"],
-    colors: ["gray", "green"],
-    images: { gray: "/products/2g.png", green: "/products/2gr.png" },
-    quantity: 1,
-    selectedSize: "l",
-    selectedColor: "gray",
-  },
-  {
-    id: 3,
-    name: "Nike Air Essentials Pullover",
-    shortDescription: "Lorem ipsum dolor sit amet...",
-    description: "Lorem ipsum dolor sit amet...",
-    price: 69.9,
-    sizes: ["s", "m", "l"],
-    colors: ["green", "blue", "black"],
-    images: { green: "/products/3gr.png", blue: "/products/3b.png", black: "/products/3bl.png" },
-    quantity: 1,
-    selectedSize: "l",
-    selectedColor: "black",
-  },
-];
+// const cartItems = [
+//   {
+//     id: 1,
+//     name: "Adidas CoreFit T-Shirt",
+//     shortDescription: "Lorem ipsum dolor sit amet...",
+//     description: "Lorem ipsum dolor sit amet...",
+//     price: 39.9,
+//     sizes: ["s", "m", "l", "xl", "xxl"],
+//     colors: ["gray", "purple", "green"],
+//     images: { gray: "/products/1g.png", purple: "/products/1p.png", green: "/products/1gr.png" },
+//     quantity: 1,
+//     selectedSize: "m",
+//     selectedColor: "gray",
+//   },
+//   {
+//     id: 2,
+//     name: "Puma Ultra Warm Zip",
+//     shortDescription: "Lorem ipsum dolor sit amet...",
+//     description: "Lorem ipsum dolor sit amet...",
+//     price: 59.9,
+//     sizes: ["s", "m", "l", "xl"],
+//     colors: ["gray", "green"],
+//     images: { gray: "/products/2g.png", green: "/products/2gr.png" },
+//     quantity: 1,
+//     selectedSize: "l",
+//     selectedColor: "gray",
+//   },
+//   {
+//     id: 3,
+//     name: "Nike Air Essentials Pullover",
+//     shortDescription: "Lorem ipsum dolor sit amet...",
+//     description: "Lorem ipsum dolor sit amet...",
+//     price: 69.9,
+//     sizes: ["s", "m", "l"],
+//     colors: ["green", "blue", "black"],
+//     images: { green: "/products/3gr.png", blue: "/products/3b.png", black: "/products/3bl.png" },
+//     quantity: 1,
+//     selectedSize: "l",
+//     selectedColor: "black",
+//   },
+// ];
 
 export default function CartContent() {
-  const {cartItems} = useSelector(state => state.cart)
+  const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -101,10 +104,13 @@ export default function CartContent() {
       </div>
 
       {/* STEPS AND DETAILS */}
+      {/* STEPS AND DETAILS */}
       <div className="w-full flex flex-col lg:flex-row gap-16 py-10">
         {/* STEPS */}
         <div className="w-full lg:w-7/12 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8">
-          {activeStep === 1 ? (
+          {cartItems.length === 0 ? (
+            <p className="text-center text-gray-500">Your cart is empty.</p>
+          ) : activeStep === 1 ? (
             cartItems.map((item) => (
               <div className="flex items-center justify-between" key={item.id}>
                 <div className="flex gap-8">
@@ -120,16 +126,62 @@ export default function CartContent() {
                   <div className="flex flex-col justify-between">
                     <div className="flex flex-col gap-1">
                       <p className="text-sm font-medium">{item.name}</p>
-                      <p className="text-xs text-gray-500">Quantity: {item.quantity}</p>
+                   
+                      <p className="text-xs text-gray-500">
+                        Quantity: {item.quantity}
+                      </p>
                       <p className="text-xs text-gray-500">Size: {item.size}</p>
-                      <p className="text-xs text-gray-500">Color: {item.color}</p>
+                      <p className="text-xs text-gray-500">
+                        Color: {item.color}
+                      </p>
                     </div>
                     <p className="font-medium">${item.price.toFixed(2)}</p>
                   </div>
                 </div>
-                <button className="w-8 h-8 rounded-full bg-red-100 hover:bg-red-200 transition-all duration-300 text-red-400 flex items-center justify-center cursor-pointer">
+                <div className="flex gap-5 items-center ">
+
+                
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() =>
+                            item.quantity > 1 &&
+                            dispatch(
+                              updateQuantity({
+                                id: item.id,
+                                quantity: item.quantity - 1,
+                              })
+                            )
+                          }
+                          className="w-6 h-6 flex items-center justify-center bg-gray-200 rounded-full hover:bg-gray-300"
+                        >
+                          <Minus className="w-4 h-4 text-gray-600"/>
+                        </button>
+                        <span className="text-sm font-medium">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() =>
+                            dispatch(
+                              updateQuantity({
+                                id: item.id,
+                                quantity: item.quantity + 1,
+                              })
+                            )
+                          }
+                          className="w-6 h-6 flex items-center justify-center bg-gray-200 rounded-full hover:bg-gray-300"
+                        >
+                          <Plus className="w-4 h-4 text-gray-600"/>
+                        </button>
+                      </div>
+
+                <button
+                  onClick={() => dispatch(removeFromCart(item.id))}
+                  className="w-8 h-8 rounded-full bg-red-100 hover:bg-red-200 transition-all duration-300 text-red-400 flex items-center justify-center cursor-pointer"
+                >
                   <Trash2 className="w-4 h-4" />
                 </button>
+
+                </div>
               </div>
             ))
           ) : activeStep === 2 ? (
@@ -137,7 +189,9 @@ export default function CartContent() {
           ) : activeStep === 3 ? (
             <PaymentForm />
           ) : (
-            <p className="text-sm text-gray-500">Please fill in the shipping form to Continue.</p>
+            <p className="text-sm text-gray-500">
+              Please fill in the shipping form to Continue.
+            </p>
           )}
         </div>
 
@@ -152,7 +206,7 @@ export default function CartContent() {
                 {cartItems.reduce(
                   (total, item) => total + item.price * item.quantity,
                   0
-                )}
+                ).toFixed(2)}
               </p>
             </div>
             <div className="flex justify-between text-sm">
